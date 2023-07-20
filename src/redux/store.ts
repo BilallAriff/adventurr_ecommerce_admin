@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import counterReducer from "./features/counter/counterSlice";
+import sidebarReducer from "./features/sidebar/sidebarSlice";
 import { userApi } from "./services/userApi";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
 
 export const store = configureStore({
   reducer: {
     counterReducer,
+    sidebarReducer,
     [userApi.reducerPath]: userApi.reducer,
   },
   //   devTools: process.env.NODE_ENV !== "production",
