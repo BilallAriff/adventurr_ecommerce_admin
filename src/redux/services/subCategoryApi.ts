@@ -23,22 +23,25 @@ export const subCategoryApi = createApi({
     }),
     addNewSubCategory: builder.mutation({
       query: (payload) => ({
-        url: "/sub-categories",
+        url: "sub-categories",
         method: "POST",
         body: payload,
         formData: true,
       }),
+      invalidatesTags: ["Sub-Categories"],
     }),
-    updateSubCategory: builder.mutation<SubCategory, null>({
+    updateSubCategory: builder.mutation({
       query: (payload) => ({
-        url: "/sub-categories",
+        url: "sub-categories",
         method: "PUT",
         body: payload,
+        formData: true,
       }),
+      invalidatesTags: ["Sub-Categories"],
     }),
     deleteSubCategoryById: builder.mutation<SubCategory, { id: string }>({
       query: ({ id }) => ({
-        url: `categories/${id}`,
+        url: `sub-categories/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Sub-Categories"],

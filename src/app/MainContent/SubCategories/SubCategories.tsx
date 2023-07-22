@@ -28,7 +28,7 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
 import ConfirmationModal from "@/app/components/ConfirmationModal/ConfirmationModal";
 import AddNewCategory from "./AddNewSubCategory/AddNewSubCategory";
-import UpdateCategory from "./UpdateCateogory/UpdateCategory";
+import UpdateCategory from "./UpdateSubCateogory/UpdateSubCategory";
 import { useAppDispatch } from "@/redux/hooks";
 import {
   SetSelectedCategoryToUpdate,
@@ -39,7 +39,7 @@ import {
   useDeleteSubCategoryByIdMutation,
   useGetSubCategoriesQuery,
 } from "@/redux/services/subCategoryApi";
-import UpdateSubCategory from "./UpdateCateogory/UpdateCategory";
+import UpdateSubCategory from "./UpdateSubCateogory/UpdateSubCategory";
 import AddNewSubCategory from "./AddNewSubCategory/AddNewSubCategory";
 const Categories = () => {
   const { isLoading, isFetching, data, error } = useGetSubCategoriesQuery(null);
@@ -147,7 +147,7 @@ const Categories = () => {
                               sx={{ pading: 0 }}
                               onClick={() => {
                                 let deleteId = `${category.id}`;
-                                deleteCategory({ id: deleteId });
+                                deleteSubCategory({ id: deleteId });
                               }}
                             >
                               <DeleteForeverIcon />

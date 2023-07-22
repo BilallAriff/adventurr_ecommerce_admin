@@ -4,20 +4,30 @@ import { SetUpdateCategoryModal } from "@/redux/features/categories/categorySlic
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import {
   useAddNewCategoryMutation,
+  useGetCategoriesQuery,
   useUpdateCategoryMutation,
 } from "@/redux/services/categoryApi";
-import { Avatar, Box, Button, TextField, Typography } from "@mui/material";
+import { useUpdateSubCategoryMutation } from "@/redux/services/subCategoryApi";
+import {
+  Avatar,
+  Box,
+  Button,
+  TextField,
+  Typography,
+  Autocomplete,
+} from "@mui/material";
 import { Field, Formik } from "formik";
 import React from "react";
 
 const UpdateSubCategory = () => {
-  const [updateCategory] = useUpdateCategoryMutation();
+  const [updateSubCategory] = useUpdateSubCategoryMutation();
   const selectedCategoryToUpdate = useAppSelector(
     (state) => state.categoryReducer.selectedCategoryToUpdate
   );
   const updateCategoryModal = useAppSelector(
     (state) => state.categoryReducer.updateCategoryModal
   );
+  const { isLoading, data: parentCategories } = useGetCategoriesQuery(null);
 
   const dispatch = useAppDispatch();
 
@@ -40,11 +50,12 @@ const UpdateSubCategory = () => {
           formData.append("id", values?.id);
           formData.append("name", values?.name);
           formData.append("description", values?.description);
+          formData.append("category_id", values?.category_id);
           if (values?.image !== null || undefined) {
             formData.append("image", values?.image);
           }
 
-          updateCategory(formData);
+          updateSubCategory(formData);
         }}
       >
         {({
@@ -84,6 +95,23 @@ const UpdateSubCategory = () => {
               {/* {errors.description && touched.description && (
                 <Typography color="error">{errors.description}</Typography>
               )} */}
+              <Autocomplete
+                disablePortal
+                id="combo-box-demo"
+                options={parentCategories}
+                renderOption={(props, option) => (
+                  <Box component="li" {...props}>
+                    {option?.name}
+                  </Box>
+                )}
+                getOptionLabel={(option) => option?.name}
+                onChange={(event, value) => {
+                  setFieldValue("category_id", value?.id);
+                }}
+                renderInput={(params) => (
+                  <TextField {...params} label="Parent Category" size="small" />
+                )}
+              />
               <Field name="file">
                 {({ field }: any) => (
                   <TextField
