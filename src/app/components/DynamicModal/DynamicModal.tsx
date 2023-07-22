@@ -17,18 +17,11 @@ const style = {
   p: 4,
 };
 
-export default function ThemeModal(props: any) {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => setOpen(false);
+export default function DynamicModal(props: any) {
+  const { open, handleOpen, handleClose } = props;
 
   return (
     <div>
-      <Button variant="contained" size="small" onClick={handleOpen}>
-        {props?.name}
-      </Button>
       <Modal
         open={open}
         onClose={handleClose}

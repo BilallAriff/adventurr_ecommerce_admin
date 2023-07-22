@@ -27,12 +27,32 @@ export const categoryApi = createApi({
     }),
     addNewCategory: builder.mutation({
       query: (payload) => ({
-        url: "http://localhost:3000/categories",
+        url: "/categories",
         method: "POST",
         body: payload,
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
+        // headers: {
+        //   "Content-type": "application/json; charset=UTF-8",
+        // },
+        formData: true,
+      }),
+      invalidatesTags: ["Categories"],
+    }),
+    deleteCategoryById: builder.mutation<Category, { id: string }>({
+      query: ({ id }) => ({
+        url: `categories/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Categories"],
+    }),
+    updateCategory: builder.mutation({
+      query: (payload) => ({
+        url: `/categories`,
+        method: "PUT",
+        body: payload,
+        // headers: {
+        //   "Content-type": "application/json; charset=UTF-8",
+        // },
+        formData: true,
       }),
       invalidatesTags: ["Categories"],
     }),
@@ -43,4 +63,6 @@ export const {
   useGetCategoriesQuery,
   useGetCategoryByIdQuery,
   useAddNewCategoryMutation,
+  useDeleteCategoryByIdMutation,
+  useUpdateCategoryMutation,
 } = categoryApi;

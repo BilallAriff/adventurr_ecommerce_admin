@@ -1,9 +1,9 @@
-"use client";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 const style = {
   position: "absolute" as "absolute",
@@ -17,25 +17,26 @@ const style = {
   p: 4,
 };
 
-export default function ThemeModal(props: any) {
+export default function ConfirmationModal(props: any) {
+  const { children, title, isDeleteConfirmation, onConfirm } = props;
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
-    setOpen(true);
-  };
+  const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   return (
     <div>
-      <Button variant="contained" size="small" onClick={handleOpen}>
-        {props?.name}
-      </Button>
+      {isDeleteConfirmation && (
+        <Button onClick={onConfirm}>
+          <DeleteForeverIcon />
+        </Button>
+      )}
       <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>{props?.children}</Box>
+        <Box sx={style}>{children}</Box>
       </Modal>
     </div>
   );

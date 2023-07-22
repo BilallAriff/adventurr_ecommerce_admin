@@ -27,7 +27,7 @@ import { Field, Formik } from "formik";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
 import ConfirmationModal from "@/app/components/ConfirmationModal/ConfirmationModal";
-import AddNewCategory from "./AddNewCategory/AddNewCategory";
+import AddNewCategory from "./AddNewSubCategory/AddNewSubCategory";
 import UpdateCategory from "./UpdateCateogory/UpdateCategory";
 import { useAppDispatch } from "@/redux/hooks";
 import {
