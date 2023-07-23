@@ -1,0 +1,200 @@
+import ThemeModal from "@/app/components/Modal/Modal";
+import { Form, Formik } from "formik";
+import {
+  Box,
+  TextField,
+  Typography,
+  Autocomplete,
+  Button,
+} from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { useGetSubCategoriesQuery } from "@/redux/services/subCategoryApi";
+import {
+  useAddNewProductMutation,
+  useDeleteProductByIdMutation,
+} from "@/redux/services/productApi";
+import DynamicModal from "@/app/components/DynamicModal/DynamicModal";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import {
+  SetProductUpdateModalState,
+  SetSelectedProductToUpdate,
+} from "@/redux/features/product/productSlice";
+
+const UpdateProduct = () => {
+  const { data: subCategories, isLoading: subCategoriesLoading } =
+    useGetSubCategoriesQuery(null);
+
+  const [addNewProduct, { isLoading: addProductLoading }] =
+    useAddNewProductMutation();
+
+  const productUpdateModalState = useAppSelector(
+    (state) => state.productReducer.productUpdateModalState
+  );
+
+  const selectedProductToUpdate = useAppSelector(
+    (state) => state.productReducer.selectedProductToUpdate
+  );
+
+  const [initialState, setInitialState] = useState({});
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (selectedProductToUpdate) {
+      setInitialState(selectedProductToUpdate);
+    } else {
+      setInitialState({
+        name: "aa",
+        short_description: "aa",
+        long_description: "aa",
+        price_usd: "12",
+        category_id: "",
+        quantity: "12",
+      });
+    }
+    // return () => dispatch(SetSelectedProductToUpdate(undefined));
+  }, [selectedProductToUpdate]);
+
+  return (
+    <DynamicModal
+      onOpen={() => dispatch(SetProductUpdateModalState(true))}
+      onClose={() => dispatch(SetProductUpdateModalState(false))}
+      open={productUpdateModalState}
+      name="New Product"
+    >
+      <Formik
+        initialValues={initialState}
+        onSubmit={(values: any) => {
+          const formData = new FormData();
+          // Object.keys(values).map((key: any, index) => {
+          //   formData.append(key, values[key]);
+          // });
+          // console.log(values);
+          // formData.append("images[]", values?.images);
+          Object.keys(values).forEach((key) => {
+            if (key === "images") {
+              Array.from(values[key]).forEach((image) => {
+                formData.append("images", image);
+              });
+            } else {
+              formData.append(key, values[key]);
+            }
+          });
+          addNewProduct(formData);
+        }}
+      >
+        {({ setFieldValue, values }) => (
+          <Form>
+            <Box my={2}>
+              <TextField
+                name="name"
+                value={values?.name}
+                type="text"
+                size="small"
+                fullWidth
+                label="Name"
+                onChange={(e) => setFieldValue("name", e?.target?.value)}
+              />
+            </Box>
+            <Box my={2}>
+              <TextField
+                name="short_description"
+                value={values?.short_description}
+                type="text"
+                size="small"
+                fullWidth
+                label="short_description"
+                onChange={(e) =>
+                  setFieldValue("short_description", e?.target?.value)
+                }
+              />
+            </Box>
+            <Box my={2}>
+              <TextField
+                name="long_description"
+                value={values?.long_description}
+                type="text"
+                size="small"
+                fullWidth
+                label="long_description"
+                onChange={(e) =>
+                  setFieldValue("long_description", e?.target?.value)
+                }
+              />
+            </Box>
+            <Box my={2}>
+              <TextField
+                name="price"
+                value={values?.price_usd}
+                type="text"
+                size="small"
+                fullWidth
+                label="price"
+                onChange={(e) => setFieldValue("price", e?.target?.value)}
+              />
+            </Box>
+            <Box my={2}>
+              <TextField
+                name="stock"
+                v
+                type="text"
+                size="small"
+                fullWidth
+                label="stock"
+                onChange={(e) => setFieldValue("stock", e?.target?.value)}
+              />
+            </Box>
+            <Box my={2}>
+              <TextField
+                name="images"
+                inputProps={{
+                  multiple: true,
+                }}
+                type="file"
+                size="small"
+                fullWidth
+                label="Images"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  // console.log(e?.currentTarget?.files)
+                  setFieldValue("images", e?.currentTarget?.files)
+                }
+              />
+            </Box>
+            <Box my={2}>
+              <Autocomplete
+                options={subCategories}
+                renderOption={(props, option) => {
+                  return <Box {...props}>{option?.name}</Box>;
+                }}
+                getOptionLabel={(option) => option?.name}
+                onChange={(event, value) => {
+                  setFieldValue("category_id", value?.id);
+                }}
+                renderInput={(params) => (
+                  <TextField {...params} label="Category" size="small" />
+                )}
+              />
+            </Box>
+            <Box>
+              <Button type="submit">Save</Button>
+              <Button
+                type="button"
+                onClick={() => dispatch(SetProductUpdateModalState(false))}
+              >
+                Close
+              </Button>
+              <Button
+                type="button"
+                onClick={() => console.log(selectedProductToUpdate)}
+              >
+                log
+              </Button>
+            </Box>
+          </Form>
+        )}
+      </Formik>
+    </DynamicModal>
+  );
+};
+
+export default UpdateProduct;
