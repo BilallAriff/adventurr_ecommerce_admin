@@ -1,8 +1,11 @@
+"use client";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Providers } from "../redux/Provider";
 import { store } from "../redux/store";
+import { ThemeProvider } from "@mui/material";
+import { theme } from "./Theme";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,9 +21,25 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
-        <Providers>{children}</Providers>
-      </body>
+      <head>
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap"
+        />
+      </head>
+      <ThemeProvider theme={theme}>
+        <Providers>
+          <body
+            style={{
+              backgroundColor: "#f1f1f1",
+              border: "1px solid purple",
+              height: "100vh",
+            }}
+          >
+            {children}
+          </body>
+        </Providers>
+      </ThemeProvider>
     </html>
   );
 }

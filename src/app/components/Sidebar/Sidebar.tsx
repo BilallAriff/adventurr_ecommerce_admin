@@ -14,6 +14,7 @@ import StarBorder from "@mui/icons-material/StarBorder";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { SetSelectedSection } from "@/redux/features/sidebar/sidebarSlice";
 import { Typography } from "@mui/material";
+import ThemeContainer from "../ThemeContainer/ThemeContainer";
 
 export default function NestedList() {
   const [open, setOpen] = React.useState(true);
@@ -28,86 +29,96 @@ export default function NestedList() {
   const dispatch = useAppDispatch();
 
   return (
-    <List
-      sx={{ mt: 2, width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
-      component="nav"
-      aria-labelledby="nested-list-subheader"
-      subheader={
-        <ListSubheader component="div" id="nested-list-subheader">
-          <Typography mb={1} variant="h5">
-            Dashboard
-          </Typography>
-        </ListSubheader>
-      }
-    >
-      <ListItemButton
-        onClick={() => dispatch(SetSelectedSection("categories"))}
-      >
-        <ListItemIcon>
-          <SendIcon />
-        </ListItemIcon>
-        <ListItemText primary="Categories" />
-      </ListItemButton>
-      <ListItemButton
-        onClick={() => dispatch(SetSelectedSection("sub_categories"))}
-      >
-        <ListItemIcon>
-          <DraftsIcon />
-        </ListItemIcon>
-        <ListItemText primary="Sub-Categories" />
-      </ListItemButton>
-      <ListItemButton
-        onClick={() => {
-          handleClick();
-          //   dispatch(SetSelectedSection("sub_categories"));
+    <ThemeContainer>
+      {/* <Box>
+        <Typography color="#">Dashboard</Typography>
+      </Box> */}
+      <List
+        sx={{
+          height: "100%",
+          width: "100%",
+          maxWidth: 360,
+          bgcolor: "background.paper",
         }}
+        component="nav"
+        aria-labelledby="nested-list-subheader"
+        subheader={
+          <ListSubheader component="div" id="nested-list-subheader">
+            <Typography mb={1} variant="h5">
+              Dashboard
+            </Typography>
+          </ListSubheader>
+        }
       >
-        <ListItemIcon>
-          <InboxIcon />
-        </ListItemIcon>
-        <ListItemText primary="Products" />
-        {open ? <ExpandLess /> : <ExpandMore />}
-      </ListItemButton>
-      <Collapse in={open} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <ListItemButton
-            sx={{ pl: 4 }}
-            onClick={() => dispatch(SetSelectedSection("products"))}
-          >
-            <ListItemIcon>
-              <StarBorder />
-            </ListItemIcon>
-            <ListItemText primary="Products" />
-          </ListItemButton>
-          <ListItemButton
-            sx={{ pl: 4 }}
-            onClick={() => dispatch(SetSelectedSection("stocks"))}
-          >
-            <ListItemIcon>
-              <StarBorder />
-            </ListItemIcon>
-            <ListItemText primary="Stocks" />
-          </ListItemButton>
-          <ListItemButton
-            sx={{ pl: 4 }}
-            onClick={() => dispatch(SetSelectedSection("product_images"))}
-          >
-            <ListItemIcon>
-              <StarBorder />
-            </ListItemIcon>
-            <ListItemText primary="Product Images" />
-          </ListItemButton>
-          <ListItemButton
-            sx={{ pl: 4 }}
-            onClick={() => dispatch(SetSelectedSection("product_videos"))}
-          >
-            <ListItemIcon>
-              <StarBorder />
-            </ListItemIcon>
-            <ListItemText primary="Product Videos" />
-          </ListItemButton>
-        </List>
-      </Collapse>
-    </List>
+        <ListItemButton
+          onClick={() => dispatch(SetSelectedSection("categories"))}
+        >
+          <ListItemIcon>
+            <SendIcon />
+          </ListItemIcon>
+          <ListItemText primary="Categories" />
+        </ListItemButton>
+        <ListItemButton
+          onClick={() => dispatch(SetSelectedSection("sub_categories"))}
+        >
+          <ListItemIcon>
+            <DraftsIcon />
+          </ListItemIcon>
+          <ListItemText primary="Sub-Categories" />
+        </ListItemButton>
+        <ListItemButton
+          onClick={() => {
+            handleClick();
+            //   dispatch(SetSelectedSection("sub_categories"));
+          }}
+        >
+          <ListItemIcon>
+            <InboxIcon />
+          </ListItemIcon>
+          <ListItemText primary="Products" />
+          {open ? <ExpandLess /> : <ExpandMore />}
+        </ListItemButton>
+        <Collapse in={open} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            <ListItemButton
+              sx={{ pl: 4 }}
+              onClick={() => dispatch(SetSelectedSection("products"))}
+            >
+              <ListItemIcon>
+                <StarBorder />
+              </ListItemIcon>
+              <ListItemText primary="Products" />
+            </ListItemButton>
+            <ListItemButton
+              sx={{ pl: 4 }}
+              onClick={() => dispatch(SetSelectedSection("stocks"))}
+            >
+              <ListItemIcon>
+                <StarBorder />
+              </ListItemIcon>
+              <ListItemText primary="Stocks" />
+            </ListItemButton>
+            <ListItemButton
+              sx={{ pl: 4 }}
+              onClick={() => dispatch(SetSelectedSection("product_images"))}
+            >
+              <ListItemIcon>
+                <StarBorder />
+              </ListItemIcon>
+              <ListItemText primary="Product Images" />
+            </ListItemButton>
+            <ListItemButton
+              sx={{ pl: 4 }}
+              onClick={() => dispatch(SetSelectedSection("product_videos"))}
+            >
+              <ListItemIcon>
+                <StarBorder />
+              </ListItemIcon>
+              <ListItemText primary="Product Videos" />
+            </ListItemButton>
+          </List>
+        </Collapse>
+      </List>
+    </ThemeContainer>
   );
 }
