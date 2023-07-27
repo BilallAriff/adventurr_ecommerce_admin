@@ -2,41 +2,37 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
+import { Modal as MuiModal } from "@mui/material";
 
-const style = {
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
-
-export default function ThemeModal(props: any) {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => setOpen(false);
-
+export default function Modal(props: any) {
+  const { open, handleOpen, handleClose } = props;
   return (
-    <div>
-      <Button variant="contained" size="small" onClick={handleOpen}>
-        {props?.name}
-      </Button>
-      <Modal
+    <>
+      <MuiModal
+        sx={{
+          // border: "4px solid red",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "rgb(0, 0, 0, 0.5)",
+          backdropFilter: "blur(3px)",
+        }}
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>{props?.children}</Box>
-      </Modal>
-    </div>
+        <Box
+          sx={{
+            // maxWidth: 500,
+            // maxHeight: 500,
+            backgroundColor: "#FFFFFF",
+            borderRadius: "4px",
+          }}
+        >
+          {props?.children}
+        </Box>
+      </MuiModal>
+    </>
   );
 }

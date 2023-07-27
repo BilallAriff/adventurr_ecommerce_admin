@@ -23,11 +23,13 @@ import {
 } from "@/redux/services/productApi";
 import AddNewProduct from "./AddNewProduct/AddNewProduct";
 import {
-  SetProductUpdateModalState,
+  SetProductFormModalState,
   SetSelectedProductToUpdate,
 } from "@/redux/features/product/productSlice";
 import { useAppDispatch } from "@/redux/hooks";
 import UpdateProduct from "./UpdateProduct/UpdateProduct";
+import { ColorPalete } from "@/app/CommonStyles";
+import ProductForm from "./ProductForm/ProductForm";
 
 export default function Products() {
   const { isLoading: productsLoading, data } = useGetproductsQuery(null);
@@ -40,12 +42,26 @@ export default function Products() {
     return <h4>Loading . . . </h4>;
   }
   return (
-    <Grid container mt={2}>
-      <Grid item md={12} mb={2}>
+    <Grid container>
+      <Grid item md={12} padding={0.5} sx={{ border: "1px solid red" }}>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-          <Typography variant="h4">Products</Typography>
-          <AddNewProduct />
-          <UpdateProduct />
+          <Typography
+            variant="h5"
+            fontWeight={"bold"}
+            color={ColorPalete.primary_light}
+          >
+            Products
+          </Typography>
+          <Button
+            variant="contained"
+            size="small"
+            onClick={() => dispatch(SetProductFormModalState(true))}
+          >
+            Add New Product
+          </Button>
+          <ProductForm />
+          {/* <AddNewProduct /> */}
+          {/* <UpdateProduct /> */}
         </Box>
       </Grid>
       <Grid item md={12}>
@@ -117,7 +133,7 @@ export default function Products() {
                         <Button
                           onClick={() => {
                             dispatch(SetSelectedProductToUpdate(product));
-                            dispatch(SetProductUpdateModalState(true));
+                            // dispatch(SetProductUpdateModalState(true));
                           }}
                         >
                           <EditIcon />

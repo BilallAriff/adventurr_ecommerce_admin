@@ -23,7 +23,7 @@ const AddNewProduct = () => {
 
   return (
     <ThemeModal name="New Product">
-      <Formik
+      {/* <Formik
         initialValues={{
           name: "aa",
           short_description: "aa",
@@ -146,7 +146,7 @@ const AddNewProduct = () => {
             </Box>
           </Form>
         )}
-      </Formik>
+      </Formik> */}
     </ThemeModal>
   );
 };

@@ -5,8 +5,10 @@ import { Grid, Box, Typography, Container } from "@mui/material";
 import Sidebar from "../components/Sidebar/Sidebar";
 import MainContent from "../MainContent/MainContent";
 import Image from "next/image";
-import { styleFlexEerything } from "../CommonStyles";
+import { styleFlexEverything } from "../CommonStyles";
 import Header from "../components/Header/Header";
+import AddNewProduct from "../MainContent/Products/AddNewProduct/AddNewProduct";
+import UpdateProduct from "../MainContent/Products/UpdateProduct/UpdateProduct";
 
 const Dashboard = () => {
   return (
@@ -27,10 +29,18 @@ const Dashboard = () => {
         >
           <Sidebar />
         </Grid>
-        <Grid item sm={9}>
-          <Container>
+        <Grid item sm={9} padding={0.5} sx={{ border: "1px solid red" }}>
+          <Box
+            sx={{
+              border: "1px solid red",
+              backgroundColor: "#FFFFFF",
+              borderRadius: "4px",
+              width: "100%",
+              height: "100%",
+            }}
+          >
             <MainContent />
-          </Container>
+          </Box>
         </Grid>
       </Grid>
     </>

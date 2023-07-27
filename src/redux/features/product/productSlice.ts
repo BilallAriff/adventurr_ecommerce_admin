@@ -3,19 +3,21 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 type ProductState = {
   productUpdateModalState: boolean;
   selectedProductToUpdate: any;
+  productFormModalState: boolean;
 };
 
-const initialState = {
+const initialState: ProductState = {
   productUpdateModalState: false,
   selectedProductToUpdate: undefined,
+  productFormModalState: false,
 };
 
 export const product = createSlice({
   name: "product",
   initialState,
   reducers: {
-    SetProductUpdateModalState: (state, action: PayloadAction<boolean>) => {
-      state.productUpdateModalState = action.payload;
+    SetProductFormModalState: (state, action: PayloadAction<boolean>) => {
+      state.productFormModalState = action.payload;
     },
     SetSelectedProductToUpdate: (state, action: PayloadAction<any>) => {
       console.log("from dispatch ", action.payload);
@@ -24,6 +26,6 @@ export const product = createSlice({
   },
 });
 
-export const { SetProductUpdateModalState, SetSelectedProductToUpdate } =
+export const { SetProductFormModalState, SetSelectedProductToUpdate } =
   product.actions;
 export default product.reducer;
