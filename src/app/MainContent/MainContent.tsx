@@ -7,6 +7,7 @@ import Products from "./Products/Products";
 import Stocks from "./Stocks/Stocks";
 import ProductImages from "./ProductImages/ProductImages";
 import ProductVideos from "./ProductVideos/ProductVideos";
+import ComingSoon from "../ComingSoon/ComingSoon";
 
 const MainContent = () => {
   const selectedSection = useAppSelector(
@@ -16,7 +17,7 @@ const MainContent = () => {
   if (selectedSection === "categories") {
     return <Categories />;
   }
-  if (selectedSection === "sub_categories") {
+  if (selectedSection === "subCategories") {
     return <SubCategories />;
   }
   if (selectedSection === "products") {
@@ -25,13 +26,13 @@ const MainContent = () => {
   if (selectedSection === "stocks") {
     return <Stocks />;
   }
-  if (selectedSection === "product_images") {
+  if (selectedSection === "productImages") {
     return <ProductImages />;
   }
-  if (selectedSection === "product_videos") {
+  if (selectedSection === "productVideos") {
     return <ProductVideos />;
   }
-  return <></>;
+  return <ComingSoon />;
 };
 
 export default MainContent;

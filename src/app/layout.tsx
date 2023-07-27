@@ -32,7 +32,7 @@ export default function RootLayout({
           <body
             style={{
               backgroundColor: "#f1f1f1",
-              border: "1px solid purple",
+
               height: "100vh",
             }}
           >

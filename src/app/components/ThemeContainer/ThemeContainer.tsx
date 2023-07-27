@@ -3,7 +3,7 @@ import { Box, PropTypes } from "@mui/material";
 
 const ThemeContainer = (props: any) => {
   const { children } = props;
-  return <Box sx={{ border: "1px solid orange" }}>{children}</Box>;
+  return <Box>{children}</Box>;
 };
 
 export default ThemeContainer;
