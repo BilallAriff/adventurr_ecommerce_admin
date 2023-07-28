@@ -12,10 +12,10 @@ const TestTextField = (props: any) => {
           flexDirection: "column",
           alignItems: "start",
           justifyContent: "start",
+          width: "100%",
         }}
       >
         <Typography
-          sx={{ border: "1px solid red" }}
           textAlign={"center"}
           fontWeight={"bold"}
           mt={0.5}
@@ -24,7 +24,7 @@ const TestTextField = (props: any) => {
         >
           {fieldLabel}
         </Typography>
-        <MuiTextField {...props} fullWidth size={"small"} />
+        <MuiTextField fullWidth size={"small"} {...props} />
       </Box>
     </>
   );

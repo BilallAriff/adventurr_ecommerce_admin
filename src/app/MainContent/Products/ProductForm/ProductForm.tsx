@@ -6,6 +6,7 @@ import {
   Typography,
   Autocomplete,
   Button,
+  Grid,
 } from "@mui/material";
 import React from "react";
 import { useGetSubCategoriesQuery } from "@/redux/services/subCategoryApi";
@@ -17,6 +18,8 @@ import Modal from "@/app/components/Modal/Modal";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { SetProductFormModalState } from "@/redux/features/product/productSlice";
 import TestTextField from "../../../components/TextField/TextField";
+import DragAndDropFileUpload from "@/app/components/DragAndDropFileUpload/DragAndDropFileUpload";
+import MasonryGallery from "@/app/components/MansonaryGallary/MansonaryGallary";
 
 const ProductForm = () => {
   const { data: subCategories, isLoading: subCategoriesLoading } =
@@ -38,7 +41,71 @@ const ProductForm = () => {
       onClose={() => dispatch(SetProductFormModalState(false))}
       name="New Product"
     >
-      <Box padding={0.5}>
+      <Grid maxHeight={550} maxWidth={1100} container padding={1}>
+        <Grid
+          item
+          md={12}
+          display={"flex"}
+          justifyContent={"space-between"}
+          borderBottom={"1px solid #F1F1F1"}
+        >
+          <Typography variant="h4" fontWeight={"bold"}>
+            Products
+          </Typography>
+          <Button sx={{ textTransform: "capitalize" }}>
+            Upload Images/Videos
+          </Button>
+        </Grid>
+        <Grid md={6.5} spacing={0.5} container>
+          <Grid item md={12}>
+            <TestTextField fieldLabel={"Name"} />
+          </Grid>
+          <Grid item md={6}>
+            <TestTextField fieldLabel={"Price in USD"} />
+          </Grid>
+          <Grid item md={6}>
+            <TestTextField fieldLabel={"Quantity"} />
+          </Grid>
+          <Grid item md={12}>
+            <TestTextField fieldLabel={"Category"} />
+          </Grid>
+          <Grid item md={12}>
+            <TestTextField
+              multiline
+              rows={4}
+              fieldLabel={"Short description"}
+            />
+          </Grid>
+          <Grid item md={12}>
+            <Button sx={{ border: "2px solid #000722" }} variant="outlined">
+              Add complete description
+            </Button>
+          </Grid>
+        </Grid>
+
+        <Grid item md={5.5}>
+          <DragAndDropFileUpload
+            onImagesChange={(images) => console.log(images)}
+          />
+        </Grid>
+        <Grid item md={12}>
+          <Box mt={0.5}>
+            <Button variant="contained" sx={{ mr: 0.5 }}>
+              Save Product
+            </Button>
+            <Button variant="outlined" sx={{ border: "2px solid #000722" }}>
+              Cancel
+            </Button>
+          </Box>
+        </Grid>
+      </Grid>
+      {/* <Box
+        sx={{
+          padding: 0.5,
+          maxHeight: 500,
+          minWidth: 700,
+        }}
+      >
         <Formik
           initialValues={{
             name: "aa",
@@ -164,7 +231,7 @@ const ProductForm = () => {
             </Form>
           )}
         </Formik>
-      </Box>
+      </Box> */}
     </Modal>
   );
 };
