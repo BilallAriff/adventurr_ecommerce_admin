@@ -8,6 +8,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import {
   Avatar,
   Grid,
@@ -16,6 +17,8 @@ import {
   Container,
   Tooltip,
   Button,
+  CircularProgress,
+  styled,
 } from "@mui/material";
 import {
   useDeleteProductByIdMutation,
@@ -28,8 +31,9 @@ import {
 } from "@/redux/features/product/productSlice";
 import { useAppDispatch } from "@/redux/hooks";
 import UpdateProduct from "./UpdateProduct/UpdateProduct";
-import { ColorPalete } from "@/app/CommonStyles";
+import { ColorPalete, styleFlexEverything } from "@/app/CommonStyles";
 import ProductForm from "./ProductForm/ProductForm";
+import ProductActions from "./UpdateProduct/ProductActions/ProductActions";
 
 export default function Products() {
   const { isLoading: productsLoading, data } = useGetproductsQuery(null);
@@ -38,12 +42,50 @@ export default function Products() {
 
   const dispatch = useAppDispatch();
 
+  // ================ Styled Components =================
+  const StyledTableContainer = styled(TableContainer)({
+    width: "100%",
+    // border: "1px solid red",
+    borderRadius: "4px",
+    overflow: "hidden",
+  });
+
+  const StyledTableHead = styled(TableHead)({});
+  const StyledTableHeadCell = styled(TableCell)({
+    // border: "1px solid red",
+    padding: 5,
+    backgroundColor: ColorPalete.primary,
+    color: ColorPalete.pure_white,
+    textAlign: "center",
+  });
+  const StyledTableCell = styled(TableCell)({
+    // border: "1px solid red",
+    fontWeight: 500,
+    padding: 5,
+    backgroundColor: ColorPalete.pure_white,
+    color: ColorPalete.primary,
+    textAlign: "center",
+  });
+  const StyledTableRow = styled(TableRow)({});
+  const StyledTableBody = styled(TableBody)({});
+
   if (productsLoading) {
-    return <h4>Loading . . . </h4>;
+    return (
+      <Box
+        sx={{
+          ...styleFlexEverything,
+          // border: "1px solid red",
+          height: "100%",
+          width: "100%",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
   }
   return (
-    <Grid container>
-      <Grid item md={12} padding={0.5} sx={{ border: "1px solid red" }}>
+    <Grid container padding={0.5}>
+      <Grid item md={12} mb={0.5}>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <Typography
             variant="h5"
@@ -65,20 +107,33 @@ export default function Products() {
         </Box>
       </Grid>
       <Grid item md={12}>
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <StyledTableContainer>
+          <Table sx={{ width: "100%" }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>No.</TableCell>
-                <TableCell align="right">Thumbnail</TableCell>
-                <TableCell align="right">Name</TableCell>
-                <TableCell align="right">Price USD</TableCell>
-                <TableCell align="right">Quantity</TableCell>
-                <TableCell align="right">Short description</TableCell>
-                <TableCell align="right">Long description</TableCell>
-                <TableCell align="right">Category</TableCell>
-                <TableCell align="right">User</TableCell>
-                <TableCell align="right">Action(s)</TableCell>
+                <StyledTableHeadCell align="right">
+                  Thumbnail
+                </StyledTableHeadCell>
+                <StyledTableHeadCell align="right">Name</StyledTableHeadCell>
+                <StyledTableHeadCell align="right">
+                  Price USD
+                </StyledTableHeadCell>
+                <StyledTableHeadCell align="right">
+                  Quantity
+                </StyledTableHeadCell>
+                <StyledTableHeadCell align="right">
+                  Short description
+                </StyledTableHeadCell>
+                <StyledTableHeadCell align="right">
+                  Long description
+                </StyledTableHeadCell>
+                <StyledTableHeadCell align="right">
+                  Category
+                </StyledTableHeadCell>
+                <StyledTableHeadCell align="right">User</StyledTableHeadCell>
+                <StyledTableHeadCell align="right">
+                  Action(s)
+                </StyledTableHeadCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -89,41 +144,44 @@ export default function Products() {
                       key={index}
                       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                     >
-                      <TableCell component="th" scope="row">
-                        {index + 1}
-                      </TableCell>
-                      <TableCell align="right">
+                      <StyledTableCell align="right">
                         <Avatar
                           src={`http://localhost:3000/${
                             product.images.length !== 0 &&
                             product.images[0].image_url
                           }`}
                         />
-                      </TableCell>
-                      <TableCell align="right">{product?.name}</TableCell>
-                      <TableCell align="right">
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        {product?.name}
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
                         {product?.price_usd}
-                      </TableCell>{" "}
-                      <TableCell align="right">
+                      </StyledTableCell>{" "}
+                      <StyledTableCell align="right">
                         {product?.stock?.quantity}
-                      </TableCell>
-                      <TableCell align="right">
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
                         <Tooltip title={product?.short_description}>
-                          <Typography>{product?.short_description}</Typography>
+                          <Typography sx={{ color: ColorPalete.primary }}>
+                            {product?.short_description}
+                          </Typography>
                         </Tooltip>
-                      </TableCell>
-                      <TableCell align="right">
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
                         {" "}
                         <Tooltip title={product?.long_description}>
                           <Typography>{product?.long_description}</Typography>
                         </Tooltip>
-                      </TableCell>
-                      <TableCell align="right">
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
                         {product?.category?.name}
-                      </TableCell>
-                      <TableCell>{"No available"}</TableCell>
-                      <TableCell>
+                      </StyledTableCell>
+                      <StyledTableCell>{"No available"}</StyledTableCell>
+                      <StyledTableCell>
+                        {/* <ProductActions /> */}
                         <Button
+                          sx={{ padding: 0, minWidth: 10 }}
                           onClick={() => {
                             deleteProductById(`${product?.id}`);
                           }}
@@ -131,6 +189,7 @@ export default function Products() {
                           <DeleteForeverIcon />
                         </Button>
                         <Button
+                          sx={{ padding: 0, minWidth: 10 }}
                           onClick={() => {
                             dispatch(SetSelectedProductToUpdate(product));
                             // dispatch(SetProductUpdateModalState(true));
@@ -138,13 +197,13 @@ export default function Products() {
                         >
                           <EditIcon />
                         </Button>
-                      </TableCell>
+                      </StyledTableCell>
                     </TableRow>
                   );
                 })}
             </TableBody>
           </Table>
-        </TableContainer>
+        </StyledTableContainer>
       </Grid>
     </Grid>
   );

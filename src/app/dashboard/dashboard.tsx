@@ -29,10 +29,9 @@ const Dashboard = () => {
         >
           <Sidebar />
         </Grid>
-        <Grid item sm={9} padding={0.5} sx={{ border: "1px solid red" }}>
+        <Grid item sm={9} padding={0.5}>
           <Box
             sx={{
-              border: "1px solid red",
               backgroundColor: "#FFFFFF",
               borderRadius: "4px",
               width: "100%",

@@ -5,7 +5,7 @@ type SidebarState = {
 };
 
 const initialState = {
-  selectedSection: "categories",
+  selectedSection: "products",
 } as SidebarState;
 
 export const counter = createSlice({
